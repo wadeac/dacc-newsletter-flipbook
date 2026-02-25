@@ -1,0 +1,4 @@
+Netlify Deployment Info:
+URL: https://frolicking-otter-0dff6d.netlify.app
+Password: My-Drop-Site
+Note: This is a temporary deployment (1 hour). Need a Netlify account for permanent hosting.

@@ -627,16 +627,14 @@
       pageFlip.on('flip', (e) => { currentPageIndex = e.data; updatePageInfo(e.data); updateTocActive(); });
       updatePageInfo(currentPageIndex);
 
-      // Double-tap / double-click to zoom into current page
-      let lastTap = 0;
+      // Single tap on the page image opens zoom reader
       container.addEventListener('click', (e) => {
-        // Don't trigger on hotspot clicks
-        if (e.target.closest('.hotspot-link, .hotspot-video, .hotspot-zoom, .hotspot-tip')) return;
-        const now = Date.now();
-        if (now - lastTap < 400) {
+        // Don't trigger on hotspot clicks or nav buttons
+        if (e.target.closest('.hotspot-link, .hotspot-video, .hotspot-zoom, .hotspot-tip, .nav-btn')) return;
+        // Only trigger if clicking on the page area (img or page div)
+        if (e.target.closest('.page')) {
           openPageZoom(currentPageIndex + 1);
         }
-        lastTap = now;
       });
     }
 
@@ -688,10 +686,37 @@
       }
     }
 
+    // ---- Pinch-to-zoom in the zoom modal via touch events ----
+    (function() {
+      const container = document.getElementById('zoomContainer');
+      let initialDist = 0;
+      let initialZoom = 100;
+      container.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+          initialDist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+          initialZoom = zoomLevel;
+        }
+      }, { passive: true });
+      container.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2) {
+          const dist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+          const scale = dist / initialDist;
+          zoomLevel = Math.min(300, Math.max(50, Math.round(initialZoom * scale)));
+          applyZoom();
+        }
+      }, { passive: true });
+    })();
+
     function showZoomHint() {
       const hint = document.createElement('div');
       hint.className = 'zoom-hint';
-      hint.textContent = 'Pinch or use +/- to zoom';
+      hint.textContent = 'Pinch to zoom, or use +/\u2212 buttons';
       document.getElementById('pageZoomModal').appendChild(hint);
       setTimeout(() => { hint.style.opacity = '0'; }, 2000);
       setTimeout(() => { hint.remove(); }, 2500);

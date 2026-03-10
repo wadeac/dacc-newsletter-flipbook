@@ -1,6 +1,6 @@
 const FLIPBOOK_CONFIG = {
 
-  title: "DACC Newsletter - Issue 05",
+  title: "DACC Newsletter - Issue 07",
   totalPages: 10,
   backgroundColor: "#2c3e50",
   pageWidth: 1700,
@@ -16,9 +16,10 @@ const FLIPBOOK_CONFIG = {
   tableOfContents: [
     { page: 1,  title: "Cover" },
     { page: 2,  title: "Learning Together, Growing Stronger" },
-    { page: 4,  title: "Campus Resources" },
-    { page: 6,  title: "Student Life" },
-    { page: 8,  title: "Events & Activities" },
+    { page: 3,  title: "Campus Resources" },
+    { page: 4,  title: "Events & Activities" },
+    { page: 5,  title: "Weekly Schedule" },
+    { page: 8,  title: "Student Clubs" },
     { page: 10, title: "Back Cover" },
   ],
 };

@@ -1,6 +1,6 @@
 const FLIPBOOK_CONFIG = {
 
-  title: "DACC Newsletter - Issue 07",
+  title: "DACC Newsletter - Issue 13",
   totalPages: 10,
   backgroundColor: "#2c3e50",
   pageWidth: 1700,
